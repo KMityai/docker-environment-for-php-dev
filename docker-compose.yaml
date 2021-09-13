@@ -1,0 +1,15 @@
+version: '3.1'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    working_dir: /app
+    user: root:root
+    environment:
+      - COMPOSER_HOME=/app/composer-home
+    volumes:
+      - ./:/app
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/entrypoint:/app/entrypoint
+    command: 'bash ./entrypoint'
