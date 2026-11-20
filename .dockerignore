@@ -1,0 +1,30 @@
+# Git / IDE
+.git
+.gitignore
+.gitattributes
+.vscode
+
+# Агентская документация не нужна внутри образа
+.agents
+task.md
+
+# Зависимости и кэш Composer монтируются/создаются в рантайме
+vendor
+composer.lock
+composer-home
+
+# Секреты
+.env
+.env.*
+
+# Артефакты
+*.log
+build
+.php-cs-fixer.cache
+.phpstan.cache
+.phpunit.result.cache
+
+# Временные файлы
+*.tmp
+*.bak
+*~

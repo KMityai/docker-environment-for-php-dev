@@ -1,0 +1,7 @@
+# Unix LF везде, кроме Windows-скриптов (PER Coding Style, работа в контейнере)
+* text=auto eol=lf
+
+# Скрипты должны сохранять бит исполнения
+entrypoint text eol=lf
+docker/php/entrypoint text eol=lf
+*.sh text eol=lf
