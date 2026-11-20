@@ -1,15 +1,37 @@
-version: '3.1'
+name: docker-environment-for-php-dev
+
 services:
   php:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      target: dev
+    image: docker-environment-for-php-dev-php:8.4
+    init: true
     working_dir: /app
-    user: root:root
+    # uid/gid совпадают с пользователем app в образе (1000), поэтому
+    # созданные в контейнере файлы остаются доступны с хоста.
+    user: "1000:1000"
     environment:
-      - COMPOSER_HOME=/app/composer-home
+      COMPOSER_HOME: /app/composer-home
+      COMPOSER_ALLOW_SUPERUSER: "1"
     volumes:
       - ./:/app
-      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-      - ./docker/php/entrypoint:/app/entrypoint
-    command: 'bash ./entrypoint'
+      - composer-home:/app/composer-home
+    command: ["sh", "-c", "php -v && exec sleep infinity"]
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(extension_loaded('intl') ? 0 : 1);"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - php
+
+networks:
+  php:
+    name: docker-environment-for-php-dev
+
+volumes:
+  composer-home:
+    name: docker-environment-for-php-dev-composer-home
