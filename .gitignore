@@ -1,2 +1,18 @@
 #IDE
 .vscode/*
+
+# Secrets / environment
+.env
+.env.*
+!.env.example
+
+# Composer artifacts (см. COMPOSER_HOME в docker-compose.yaml)
+/composer-home/
+/vendor/
+
+# Agents runtime
+.agents/.cache/
+
+# Build artifacts
+*.log
+/build/
